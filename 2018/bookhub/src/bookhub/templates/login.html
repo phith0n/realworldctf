@@ -1,0 +1,39 @@
+{% extends '_base.html' -%}
+
+{% block body %}
+<div class="d-flex flex-column justify-content-center" id="login-box">
+	<div class="login-box-header">
+		<h4>Login</h4>
+	</div>
+	<form method="post">
+    {{ form.csrf_token }}
+		<div class="name-login">
+			<input type="text" required placeholder="Username" name="username" class="name-input form-control"/>
+			{% if form.errors.username %}
+      <div role="alert" class="alert alert-danger">{{ form.errors.username | first }}</div>
+			{% endif %}
+      <input type="password" required placeholder="Password" name="password" class="password-input form-control"/>
+			{% if form.errors.password %}
+      <div role="alert" class="alert alert-danger">{{ form.errors.password | first }}</div>
+			{% endif %}
+      </div>
+		<div class="submit-row">
+			<button class="btn btn-primary btn-block box-shadow" type="submit" id="submit-id-submit">Login</button>
+			<div class="d-flex justify-content-between">
+				<div class="form-check form-check-inline" id="form-check-rememberMe">
+					<input type="checkbox" name="remember_me" class="form-check-input" id="formCheck-1"/><label for="formCheck-1" class="form-check-label"><span class="label-text">Remember Me</span></label>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div id="login-box-footer">
+		<p>
+			Admin panel login...
+		</p>
+	</div>
+</div>
+{% endblock %}
+
+{% block addscript %}
+<link rel="stylesheet" href="/static/css/login.css"/>
+{% endblock %}

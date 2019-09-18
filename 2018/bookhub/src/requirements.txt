@@ -1,0 +1,10 @@
+flask
+flask-sqlalchemy
+flask-migrate
+flask-wtf
+python-dotenv
+flask-login
+flask-session
+redis
+gunicorn
+gevent

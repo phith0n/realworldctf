@@ -1,0 +1,102 @@
+{% extends '_base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>System Management</h1>
+        </div>
+    </div>
+    <div class="row">
+            <div class="col">
+                <div class="alert alert-success" role="alert"><span><strong>Hello, {{ current_user.username }}</strong>.</span>
+                    <a href="{{ url_for('user.logout') }}">Click here</a> to logout.</div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive table-borderless">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Your username</td>
+                            <td>{{ current_user.username }}</td>
+                        </tr>
+                        <tr>
+                            <td>Your IP address</td>
+                            <td>{{ ip_address }}</td>
+                        </tr>
+                        <tr>
+                            <td>Number of users</td>
+                            <td>{{ user_count }}</td>
+                        </tr>
+                        <tr>
+                            <td>Number of books</td>
+                            <td>{{ book_count }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr />
+            <label>Change your username: </label>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="change_name_value" value="{{ current_user.username }}">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" id="change_name" type="button">Change</button>
+              </div>
+            </div>
+
+            <button class="btn btn-outline-secondary" id="clear_session" type="button">
+              Clear all session except yours
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block addscript %}
+<script src="//cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+<script>
+window.addEventListener('load', function (ev) {
+      document.querySelector('#change_name').addEventListener('click', function (ev1) {
+          const params = new URLSearchParams();
+          params.append('username', document.querySelector('#change_name_value').value);
+          axios({
+              method: 'post',
+              url: '{{ url_for('user.change_name') }}',
+              data: params,
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token() }}'
+              }
+          }).then(function (response) {
+              if (response.data.status === 'success') {
+                  location.reload()
+              } else {
+                  alert(response.data.errors['username'][0])
+              }
+          }).catch(function (error) {
+              console.log(error)
+          })
+      });
+
+      document.querySelector('#clear_session').addEventListener('click', function (ev1) {
+          const params = new URLSearchParams();
+          params.append('submit', '1');
+          axios({
+              method: 'post',
+              url: '{{ url_for('user.refresh_session') }}',
+              data: params,
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token() }}'
+              }
+          }).then(function (response) {
+              if (response.data.status === 'success') {
+                  location.reload()
+              }
+          }).catch(function (error) {
+              console.log(error)
+          })
+      });
+})
+</script>
+{% endblock %}

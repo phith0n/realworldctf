@@ -1,0 +1,57 @@
+{% extends '_base.html' %}
+{% import "_pagination.html" as pagation %}
+
+{% block body %}
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Book Management</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-success" role="alert"><span><strong>Hello, {{ current_user.username }}</strong>.</span>
+                    <a href="{{ url_for('user.logout') }}">Click here</a> to logout.</div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px">
+            <div class="col"><a class="btn btn-primary float-right" href="{{ url_for('book.add') }}">Add a new book</a></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Book cover</th>
+                                <th width="20%">Book title</th>
+                                <th>Book description</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for object in object_list.items %}
+                            <tr>
+                                <td><img src="{{ object.img }}" alt="{{ object.title }}" width="100"></td>
+                                <td>{{ object.title }}</td>
+                                <td>{{ object.description }}</td>
+                                <td><a class="btn btn-outline-primary btn-sm" href="{{ url_for('book.edit', id=object.id) }}" role="button">Edit</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="float-right">
+                    {{ pagation.render(object_list) }}
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div></div>
+{% endblock %}

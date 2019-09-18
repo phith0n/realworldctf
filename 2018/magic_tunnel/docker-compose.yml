@@ -1,0 +1,28 @@
+version: '3'
+services:
+ web:
+   build: .
+   volumes:
+    - ./files/static:/usr/src/rwctf/static
+    - ./files/media:/usr/src/rwctf/media
+   environment:
+    - DEBUG=false
+    - SECRET_KEY=q9FPF3XBb9Bru5tF5yG8K2kGNq7Uf7Ng39wG
+    - LOG_PATH=/tmp/error.log
+    - "DATABASE_URL=postgres://postgres:DNBe42SxW6rb@db:5432/rwctf"
+   depends_on:
+    - db
+ nginx:
+   image: nginx:1-alpine
+   volumes:
+    - ./nginx/rwctf.conf:/etc/nginx/conf.d/rwctf.conf
+    - ./files:/data
+   ports:
+    - "8080:8080"
+   depends_on:
+    - web
+ db:
+   image: postgres:10-alpine
+   environment:
+    - POSTGRES_PASSWORD=DNBe42SxW6rb
+    - POSTGRES_DB=rwctf

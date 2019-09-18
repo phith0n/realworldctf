@@ -1,0 +1,85 @@
+{% extends '_base.html' %}
+{% import "_pagination.html" as pagation %}
+
+{% block body %}
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Bookhub</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Book cover</th>
+                                <th width="20%">Book title</th>
+                                <th>Book description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for object in object_list.items %}
+                            <tr>
+                                <td><img src="{{ object.img }}" alt="{{ object.title }}" width="100"></td>
+                                <td>{{ object.title }}</td>
+                                <td>{{ object.description }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="float-right">
+                    {{ pagation.render(object_list) }}
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div></div>
+{% endblock %}
+
+{% block addscript %}
+{% if is_debug %}
+<script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js"></script>
+<script>
+window.onload = function(ev) {
+    $.notify({
+      message: 'The bookhub is running in debug mode, which can lead to security issues!'
+    }, {
+        type: 'danger',
+        placement: {
+          from: "top",
+          align: "center"
+        },
+        delay: 0
+    });
+};
+</script>
+{% endif %}
+
+{% endblock %}
+
+{% block addstyle %}
+
+{% if is_debug %}
+<style>
+[data-notify="progressbar"] {
+	margin-bottom: 0px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 5px;
+}
+</style>
+{% endif %}
+
+{% endblock %}

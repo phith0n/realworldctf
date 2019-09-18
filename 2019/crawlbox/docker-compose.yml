@@ -1,0 +1,30 @@
+version: '2.4'
+services:
+  web:
+    build: .
+    depends_on:
+      - redis
+    volumes:
+      - ./web:/usr/src/web
+      - ./webpage:/usr/src/webpage
+      - ./docker/control.py:/opt/control.py
+    cap_add:
+      - SYS_ADMIN
+    restart: always
+    # cpus: '1.2'
+    # mem_limit: 5G
+  redis:
+    image: redis:alpine
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./docker/redis.conf:/usr/local/etc/redis/redis.conf
+    restart: always
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "45818:80"
+    volumes:
+      - ./docker/nginx-www.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - web
+    restart: always

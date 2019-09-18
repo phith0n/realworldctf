@@ -1,0 +1,22 @@
+version: '2'
+services:
+ redis:
+   image: redis:4
+   command: redis-server /etc/redis/redis.conf
+   volumes:
+    - ./redis/redis.conf:/etc/redis/redis.conf
+ web:
+   build: .
+   volumes:
+    - ./src:/usr/src
+   env_file:
+    - ./conf/.env
+ nginx:
+   image: nginx:1
+   volumes:
+    - ./nginx/bookhub.conf:/etc/nginx/conf.d/bookhub.conf
+    - ./src/bookhub/static:/usr/share/nginx/html/static
+    - ./nginx/white.list:/etc/nginx/white.list
+    - ./source.zip:/usr/share/nginx/html/www.zip
+   ports:
+    - "8080:8080"

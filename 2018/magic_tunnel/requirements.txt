@@ -1,0 +1,6 @@
+Django
+pycurl
+pytz
+uwsgi
+dj-database-url
+psycopg2

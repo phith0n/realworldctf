@@ -1,0 +1,8 @@
+/scrapyd/
+/env/
+*.egg-info
+build/
+*.egg
+*.pyc
+__pycache__
+/.idea/

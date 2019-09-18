@@ -1,0 +1,23 @@
+{% macro render(form) -%}
+
+{%- for field in form -%}
+{%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
+  {{ field() }}
+{%- elif field.is_show and not field.is_show() -%}
+{%- else -%}
+  <div class="form-group">
+    <label class="{% if field.errors %}text-danger{% endif %}">{{ field.label.text }}</label>
+    {{ field(class_="form-control") }}
+    {% if field.errors or field.help_text %}
+        <small class="form-text {% if field.errors %}text-danger{% else %}text-muted{% endif %}">
+        {% if field.errors %}
+          {{ field.errors | first }}
+        {% else %}
+          {{ field.help_text }}
+        {% endif %}
+        </small>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+{%- endfor -%}
+{% endmacro %}

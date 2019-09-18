@@ -1,0 +1,21 @@
+{% extends '_base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Error Page</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div role="alert" class="alert alert-danger">
+                <h4 class="alert-heading">{{ heading | default('Something goes wrong~') }}</h4>
+                <p>{{ detail }}
+                    Please <a href="{{ jump | default('javascript:history.back(-1)') }}">click here</a> to process.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
