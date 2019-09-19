@@ -23,7 +23,7 @@
                         <tbody>
                             {% for object in object_list.items %}
                             <tr>
-                                <td><img src="{{ object.img }}" alt="{{ object.title }}" width="100"></td>
+                                <td><img src="{{ object.img }}" alt="{{ object.title }}" width="100" referrerpolicy="origin"></td>
                                 <td>{{ object.title }}</td>
                                 <td>{{ object.description }}</td>
                             </tr>

@@ -140,4 +140,4 @@ class BrowserMiddleware(object):
 
     def spider_closed(self, spider, reason):
         spider.logger.info('Close browser')
-        self.browser.quit()
+        # self.browser.quit()
